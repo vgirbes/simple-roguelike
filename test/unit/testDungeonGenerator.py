@@ -21,31 +21,6 @@ class TestDungeonGenerator(unittest.TestCase):
 
         self.assertEqual(len(dungeon.cells), width * height)
 
-    def test_dig_rect(self):
-        dungeon = Dungeon()
-
-        x = 3
-        y = 5
-        w = 25
-        h = 40
-
-        unfilledChar = '#'
-        filledChar = '.'
-        
-        dungeon.dig_rect(x, y, w, h)
-
-        xRange = range(x, x + w)
-        yRange = range(y, y + h)
-
-        for cell in dungeon.cells:
-            cellPos = cell.components['position']
-            cellRender = cell.components['render']
-
-            if cellPos.x in xRange and cellPos.y in yRange:
-                self.assertEqual(cellRender.char, filledChar)
-            else:
-                self.assertEqual(cellRender.char, unfilledChar)
-
     def test_create_default_rooms(self):
         dungeon = Dungeon()
 
@@ -62,9 +37,9 @@ class TestDungeonGenerator(unittest.TestCase):
         dungeon.minRooms = 2
         dungeon.maxRooms = 4
 
-        dungeon.create_rooms(minRooms, maxRooms)
+        dungeon.create_rooms()
 
-        self.assertTrue(minRooms <= len(dungeon.rooms) <= maxRooms)
+        self.assertTrue(dungeon.minRooms <= len(dungeon.rooms) <= dungeon.maxRooms)
 
     def test_get_random_cell(self):
         wDungeon = 20
